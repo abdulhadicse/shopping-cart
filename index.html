@@ -25,13 +25,15 @@
 
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button id="removeProduct" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="countProduct" type="text" class="form-control text-center" value="1">
+                           <button id="addProduct" class="btn btn-default"><i class="fas fa-plus"></i></button>
                         </div>
-                        <h5>$1219</h5>
+                        <h5>$ <span id="priceProductMobile">1219</span></h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
+
+
                   </div>
                </div>
 
@@ -43,12 +45,12 @@
                      </div>
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button id="minusProduct" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="plusProductCount" type="text" class="form-control text-center" value="1">
+                           <button id="plusProduct" class="btn btn-default"><i class="fas fa-plus"></i></button>
 
                         </div>
-                        <h5>$59</h5>
+                        <h5>$ <span id="priceProductCase">59</span></h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -64,9 +66,9 @@
                      </div>
 
                      <div class="col-md-4 status">
-                        <h5>$1,278</h5>
+                        <h5>$ <span id="AmountTotal">1278</span></h5>
                         <h5>$0</h5>
-                        <h5>$1,278</h5>
+                        <h5>$ <span id="AmountOver">1278</span></h5>
                      </div>
                   </div>
                </div>
@@ -77,6 +79,134 @@
          </div>
       </div>
    </section>
+
+   <script>
+
+      
+      const priceMobile=getMobilePrice("priceProductMobile");
+      const priceCase=getMobilePrice("priceProductCase");
+     
+
+
+
+      const addProduct= getInput("addProduct");
+      addProduct.addEventListener("click", function(){
+         
+         const count=addCountProduct("countProduct");    
+         totalPrice("priceProductMobile",count,priceMobile);
+         overAllAmount();
+         
+        
+         
+
+      })
+
+      const removeProduct= getInput("removeProduct");
+      removeProduct.addEventListener("click", function(){
+
+         const count=removeCountProduct("countProduct");
+         totalPrice("priceProductMobile",count,priceMobile);
+         overAllAmount();
+         
+        
+
+      })
+
+
+      const plusProduct= getInput("plusProduct");
+      plusProduct.addEventListener("click", function(){
+
+         const count=addCountProduct("plusProductCount");
+         totalPrice("priceProductCase",count,priceCase);
+         overAllAmount();
+         
+
+      })
+
+      const minusProduct= getInput("minusProduct");
+      minusProduct.addEventListener("click", function(){
+
+         const count=removeCountProduct("plusProductCount");
+         totalPrice("priceProductCase",count,priceCase);
+         overAllAmount(); 
+
+      })
+
+
+
+      function addCountProduct(id){
+         countProduct=document.getElementById(id).value;
+         count=parseFloat(countProduct);
+         count++;
+         document.getElementById(id).value= count;
+         return count;
+         
+      }
+
+      function removeCountProduct(id){
+         countProduct=document.getElementById(id).value;
+         count=parseFloat(countProduct);
+
+         if(count>1){
+            count--;
+            document.getElementById(id).value= count;
+         }
+         
+         return count;
+         
+      }
+
+
+      function getMobilePrice(id){
+
+         mobilePrice=document.getElementById(id).innerText;
+         price=parseFloat(mobilePrice);
+         return price;
+
+      }
+
+      
+      function getInput(id){
+
+         const addProduct= document.getElementById(id);
+         return addProduct;
+
+      }
+
+
+
+      function totalPrice(id,count,price){
+         total=document.getElementById(id).innerText= count*price;
+         return total;
+      }
+
+
+      function overAllAmount(){
+         mobile= document.getElementById("priceProductMobile").innerText;
+         mobileTotal= parseFloat(mobile);
+
+         caseMobile= document.getElementById("priceProductCase").innerText;
+         caseTotal= parseFloat(caseMobile);
+
+         console.log(caseTotal+mobileTotal);
+
+         document.getElementById("AmountTotal").innerText = caseTotal+ mobileTotal;
+
+         document.getElementById("AmountOver").innerText = caseTotal+ mobileTotal;
+
+      }
+
+   </script>
+
+
+
+
+
+
+
+
+
+
 </body>
 
 </html>
